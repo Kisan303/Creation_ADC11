@@ -4,9 +4,26 @@
 	
 </head>
 <body>
-<h1>Welcome in Login Section</h1>
+
 
 {% block content %}
+
+
+<div class="nav">
+      
+         <ul class="menu">
+            <strong>
+            <li><a href="/">Home</a></li>
+            <li><a href="/register">Register</a></li>
+            <li><a href='/login'>Login</a></li>
+            
+            
+                   </strong>
+         </ul>
+         
+      </div>
+
+      <h1>Welcome in Login Section</h1>
 
    <form method="POST">
 
@@ -26,6 +43,8 @@
 	<h3>{{message}}</h3> <!-- error messgae form views ko login bata-->
 	{% endfor %}
 </div>
+
+
 
 {% endblock %} 
 </body>
