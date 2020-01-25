@@ -10,7 +10,7 @@ def login(request):
 	   username = request.POST['username']
 	   password = request.POST['password'] 
 
-	   user = auth.authenticate(username=username, password=password) #user auth banne model bata user rw password lai match garne kam garxha
+	   user = auth.authenticate(username=username, password=password) # checking user name and password match from auth user model
 
 	   if user is not None:
 	   	   auth.login(request, user)
@@ -31,7 +31,7 @@ def register (request):
 
 	if request.method =='POST':
 
-	#***** django auth user ko default form yesma use gareko register form ma model ko******	
+	#***** using djanho auth user model for registraion for database model******	
 	   
 	   first_name = request.POST['first_name']
 	   last_name = request.POST['last_name']
@@ -44,12 +44,12 @@ def register (request):
 	   password= request.POST['password']
 	   confirm_password = request.POST['confirm_password']
 
-	   if password==confirm_password: #2 ota password compare gareko
-	   		if User.objects.filter(username=username).exists(): #user name pahela exit xha ki xhaina baneko compare gareko
-	   			messages.info(request,'username is taken')  #yedi username purano sanga match bhayo bane error sms falne
+	   if password==confirm_password: #comparing password and confirm password are equal or not
+	   		if User.objects.filter(username=username).exists(): #user name checking from auth user model
+	   			messages.info(request,'username is taken')  # if user name is exsit already send error message
 	   			return redirect('register')
-	   		elif User.objects.filter(email=email).exists():  #emial purano xha ki xhaina check gareko
-	   			messages.info(request,'email is taken')  #purano email payo bane error sms falne register ma
+	   		elif User.objects.filter(email=email).exists():  #email id checking from auth user model
+	   			messages.info(request,'email is taken')  #if email exit in auth user model then send error message
 	   			return redirect('register')
 
 	   		else:	
@@ -63,7 +63,7 @@ def register (request):
 	   	   messages.info(request,'password is no matching')
 	   	   return redirect('register')
  
-	   return redirect('/')  #home page m redirect gareko
+	   return redirect('/')  #home page redirect
 		  
 	else:
 		 
