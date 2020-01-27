@@ -2,7 +2,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title></title>
+	   {% load static %}
+
+	<link rel="stylesheet" href="{% static 'css_files/style.css' %}" type="text/css">
+
+	<title>Register Page</title>
 </head>
 <body>
 
@@ -13,7 +17,7 @@
 {% block content %}
 
 
-<div class="nav">
+    <div class="nav">
 		
 			<ul class="menu">
 				<strong>
@@ -25,7 +29,7 @@
 				       </strong>
 			</ul>
 			
-		</div>
+		 </div>
 		<h1>Create New Account</h1>
 
 	<form  method='POST'>

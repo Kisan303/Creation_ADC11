@@ -1,15 +1,19 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<link rel="stylesheet" type="text/css" href="../cssfolder/style.css">
+
+         {% load static %}
+
+	<link rel="stylesheet" href="{% static 'css_files/style.css' %}" type="text/css">
 	<title>Home page</title>
 </head>
 <body>
 
-	
 
 	{% block content %}
+
 	<div class="nav">
+		<!--<img src="/images/logo.png"> -->
 		
 			<ul class="menu">
 				<strong>
@@ -22,7 +26,8 @@
 			
 		</div>
 	
-	{% endblock %}
+	
+		{% endblock %}
 
 	<h1>welcome home from Homepage</h1>
 
