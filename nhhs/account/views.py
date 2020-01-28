@@ -1,8 +1,12 @@
 from django.shortcuts import render, redirect
-#from django.http import HttpResponse
+from django.http import *
+from django.http import HttpResponse
+from .models import ChildEduDonor
 from django.contrib.auth.models import User, auth
 from django.contrib import messages 
-#from .models import Register
+from django.db.models import Q
+from .models import Upload
+from django.core.files.storage import FileSystemStorage
 
 
 def login(request):
@@ -21,10 +25,13 @@ def login(request):
 	       return redirect('login')   
 
 	else:
-	    return render(request, "registration/login.html")
+	    return render(request, "account/login.html")
 
 
-
+#*** Logout after login is done*******
+def logout(request):
+	auth.logout(request)
+	return redirect('/')
 
 
 def register (request):
@@ -67,17 +74,56 @@ def register (request):
 		  
 	else:
 		 
- 		return render(request,'registration/register.html')
+ 		return render(request,'account/register.html')
 
 
 
 
 def profile(request):
-	return render(request, "registration/login.html")
+	return render(request, "account/login.html")
 
 def index(request):
-	return render(request, "registration/index.html")
- #    first_name=models.CharField(max_length=250)
+	return render(request, "account/index.html")
+
+def donateChildEdu(request):
+	if request.method =='POST':
+	   print(request.POST)
+	   full_name = request.POST['full_name']
+	   contact = request.POST['contact']
+	   address = request.POST ['address']
+	   street  = request.POST['street']
+	   city = request.POST['city']
+	   postal_code = request.POST['postal_code']
+	   country = request.POST['country']
+	   email= request.POST['email']
+	   donate_catagory = request.POST['donate_catagory']
+	   donate_amt = request.POST['donate_amt']
+	   comments = request.POST['comments']
+	   ch1 = ChildEduDonor.objects.create(full_name=full_name,contact= contact,address=address,street=street, city = city, postal_code=postal_code, country=country, donate_catagory=donate_catagory, donate_amt=donate_amt, comments=comments)
+	   ch1.save()
+	   return HttpResponse("Donate Successfull!!! thank you")
+	else:
+ 		return render(request,'account/donorform.html')
+
+def memList(request):
+ 	return render(request, "account/members.html")
+
+def search(request):
+	if request.method=='POST':
+		srch=request.POST['srh']
+		
+		if srch:
+			match = ChildEduDonor.objects.filter(Q(full_name__icontains=srch) |
+				Q(donate_amt__icontains=srch) | Q(email__icontains=srch))
+			if match:
+				return render(request, 'account/members.html', {'sr':match})
+			else:
+				messages.error(request, 'no result found')
+		else:
+				return HttpResponseRedirect('/search/')
+	return render(request, 'account/members.html')
+
+
 	# last_name=models.CharField(max_length=250)
 	# username=models.CharField(max_length=250)
 	# contact=models.DateField()
@@ -87,3 +133,23 @@ def index(request):
 	# password=models.CharField(max_length=250)
 	# confirm_password=models.CharField(max_length=250)
 	
+
+
+def upload(request):
+
+	if request.method == 'POST':
+		Title= request.POST['Title']
+		Date= request.POST['Date']
+		image= request.FILES.get('image')
+		Description =request.POST['Description']
+		print(image)
+
+		creation = Upload.objects.create(Title=Title, Date=Date, image=image, Description=Description)
+		creation.save();
+		return redirect('/')
+
+	else:
+		return render(request, "account/upload.html")	
+def home(request):
+	creation2 = Upload.objects.all()	
+	return render(request, 'index.html', {"creation2":creation2})

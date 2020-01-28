@@ -1,0 +1,82 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	  {% load static %}
+
+	<link rel="stylesheet" href="{% static 'css_files/style.css' %}" type="text/css">
+	<title></title>
+</head>
+<body>
+
+	<div class="nav">
+		<!--<img src="/images/logo.png"> -->
+		
+			<ul class="menu">
+				<strong>
+				<li><a href="/">Home</a></li>
+
+				{% if user.is_authenticated %}
+				<li style="font-family: arial; color: pink;"> Hello, {{user.username}}</li>
+				<li><a href="/logout">LogOut</a></li>
+				{% else %}
+
+				<li><a href="/register">Register</a></li>
+				<li><a href="/login">Login</a></li>
+				{% endif %}
+				<li><a href="/donorform">Donate</a></li>
+				<li><a href="/members">Members</a></li>
+				<li><a href="/search">Search</a></li>
+				<li><a href="/upload">News Upadte</a></li>
+				       </strong>
+			</ul>
+			
+		</div>
+
+		
+
+
+
+{% block content %}
+<h1> Fill Up the form</h1>
+
+	<form  method='POST'>
+
+		{% csrf_token %}
+		Full Name:
+		<input type="text" name="full_name" placeholder="Enter your Full Name" required=""><br><br>
+		Contact:
+		<input type="number" name="contact"placeholder="Enter your contact" required=""><br><br>
+		Address:
+		<input type="text" name="address"  placeholder="Enter your Address" required=""><br><br>
+		street:
+		<input type="text" name="street"placeholder="Enter your Street" required=""><br><br>
+		city:
+		<input type="text" name="city"placeholder="Enter your City" required=""><br><br>
+		Postal Code:
+		<input type="number" name="postal_code"placeholder="Enter your Postal Code" required=""><br><br>
+		Country:
+		<input type="text" name="country"placeholder="Confirm your country" required=""><br><br>
+		Email:
+		<input type="email" name="email"placeholder="Enter your Email" required=""><br><br>
+		Donate Catagory:
+		<input type="text" name="donate_catagory"placeholder="please choose donate catagory" required=""><br><br>
+		<!--<input type="checkbox" name="child education" value="child education"> Child Education<br>
+  		<input type="checkbox" name="homeless person" value="homeless person"> Homeless Person<br>
+  		<input type="checkbox" name="health care" value="health care" checked> Health Care<br><br>-->
+		Donate Amt:
+		<input type="number" name="donate_amt"placeholder="Enter your donate amt" required=""><br><br>
+		Comments:
+		<input type="text" name="comments"placeholder=" write here" required=""><br><br>
+		<button>Register</button>
+		
+	</form>
+
+
+
+{% endblock %} 
+
+</body>
+</html>
+
+
