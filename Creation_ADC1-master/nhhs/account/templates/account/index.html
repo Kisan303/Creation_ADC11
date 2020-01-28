@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+         {% load static %}
+
+	<link rel="stylesheet" href="{% static 'css_files/style.css' %}" type="text/css">
+	<title>Home page</title>
+</head>
+<body>
+
+
+	{% block content %}
+
+	<div class="nav">
+		<!--<img src="/images/logo.png"> -->
+		
+			<ul class="menu">
+				<strong>
+				<li><a href="/">Home</a></li>
+				<li><a href="/register">Register</a></li>
+				<li><a href="/login">Login</a></li>
+				<li><a href="/donate">Donate</a></li>
+				<li><a href="/members">Members</a></li>
+				<li><a href="/search">Search</a></li>
+				       </strong>
+			</ul>
+			
+		</div>
+	
+	
+		
+
+	<h1>welcome home from Homepage</h1>
+	{% endblock %}
+
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+      {% load static %}
+
+   <link rel="stylesheet" href="{% static 'css_files/style.css' %}" type="text/css">
+	
+</head>
+<body>
+
+
+{% block content %}
+
+
+<div class="nav">
+      
+         <ul class="menu">
+            <strong>
+            <li><a href="/">Home</a></li>
+            <li><a href="/register">Register</a></li>
+            <li><a href='/login'>Login</a></li>
+            <li><a href="/donate">Donate</a></li>
+            <li><a href="/members">Members</a></li>
+            
+            
+                   </strong>
+         </ul>
+         
+      </div>
+
+      <h1>Welcome in Login Section</h1>
+
+   <form method="POST">
+
+   	{%csrf_token%}
+
+   	<input type="text" name="username" placeholder="username" required=""><br><br>
+   	<input type="password" name="password" placeholder="password" required="">
+   	<button>Login</button>
+   	
+
+   </form>
+
+   <div>
+
+	{% for message in messages %}
+
+	<h3>{{message}}</h3> <!-- error messgae pass if userna and password dont match from auth user data base model-->
+	{% endfor %}
+</div>
+
+
+
+{% endblock %} 
+</body>
+</html>
