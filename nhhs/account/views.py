@@ -82,8 +82,10 @@ def register (request):
 def profile(request):
 	return render(request, "account/login.html")
 
-def index(request):
-	return render(request, "account/index.html")
+# def index(request):
+# 	return render(request, "account/index.html")
+
+
 
 def donateChildEdu(request):
 	if request.method =='POST':
@@ -150,6 +152,9 @@ def upload(request):
 
 	else:
 		return render(request, "account/upload.html")	
+
+
 def home(request):
 	creation2 = Upload.objects.all()	
-	return render(request, 'index.html', {"creation2":creation2})
+	print(creation2)
+	return render(request, 'account/index.html', {"creation2":creation2})
