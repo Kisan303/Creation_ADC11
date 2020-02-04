@@ -18,6 +18,12 @@ urlpatterns = [
     path('logout/', views.logout, name="logout"),
     path('/<int:pk>/', views.deletecreation, name='deletecreation'),
 
+
+    path('api/upload/<int:pk>/', views.update_api_data, name="update_api_data"),
+    path('api/', views.read_api_data, name="read_api_data"),
+
+
+
     
     
 ]

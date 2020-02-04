@@ -8,6 +8,10 @@ from django.db.models import Q
 from .models import Upload
 from django.core.files.storage import FileSystemStorage
 
+from django.http import HttpResponse, JsonResponse
+import json
+from django.views.decorators.csrf import csrf_exempt
+
 
 def login(request):
 	if request.method=='POST':
@@ -147,7 +151,7 @@ def upload(request):
 		print(image)
 
 		creation = Upload.objects.create(Title=Title, Date=Date, image=image, Description=Description)
-		creation.save();
+
 		return redirect("/")
 
 	else:
@@ -166,4 +170,50 @@ def deletecreation(request, pk):
 		creation.delete()
 
 	return redirect("/")	
+
+
+
+def read_api_data(request):
+    creation = Upload.objects.all()
+    print(creation)
+    print(list(creation))
+    print(list(creation.values('Title','Date','image')))
+    dict_data = {"creations":list (creation.values())}
+    return JsonResponse(dict_data)
+
+
+
+
+
+@csrf_exempt
+def update_api_data(request, pk):
+    creation = Upload.objects.get(pk=pk)
+    if request.method == "GET":
+        return JsonResponse({"Title": creation.Title, "Date": creation.Date, "Description": creation.Description})
+    elif request.method == "PUT":
+    	decoded_data = request.body.decode('utf-8')
+    	data = json.loads(decoded_data)
+    	creation.Title = data['Title']
+    	creation.Date = data['Date']
+    	creation.Description = data['Description']
+    	creation.save()
+    	return JsonResponse({"message": "Completed Successfull !!"})	
+    elif request.method =="DELETE":
+    	creation = Upload.objects.get(id=pk)
+    	creation.delete()
+    	return JsonResponse({"message":"Delete Successfull!!!"})
+
+    elif request.method=="POST":
+    	print (request.body)
+    	data = json.loads(request.body)
+    	print(data['Title'])
+    	print(data['Description'])
+    	print(data['Date'])
+    	Upload.objects.create(Title=data['Title'], Date=data['Date'], Description=data['Description'])
+    	return JsonResponse({"message":"Post Successfull!!!"})
+
+    	
+    else:
+    	return JsonResponse({"message": "testing"})
+
 
