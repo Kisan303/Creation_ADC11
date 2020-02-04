@@ -35,6 +35,7 @@ class ChildEduDonor(models.Model):
 	donate_catagory=models.CharField(max_length=50)
 	donate_amt=models.IntegerField()
 	comments=models.CharField(max_length=300)
+	org=models.ForeignKey(Org, null=True, on_delete=models.SET_NULL)
 	
 def __str__(self):
 	return self.full_name
@@ -46,6 +47,8 @@ class User(models.Model):
 	email=models.EmailField()
 	password=models.CharField(max_length=50)
 	confirm_password=models.CharField(max_length=50)
+	
+
 def __str__(self):
 	return self.first_name
 
@@ -59,6 +62,8 @@ class Receiver(models.Model):
 	receiver_acc=models.IntegerField()
 	distribute_handcash=models.IntegerField()
 	org=models.ForeignKey(Org, on_delete=models.CASCADE)
+	org=models.ForeignKey(Org, on_delete=models.CASCADE)
+
 
 def __str__(self):
 	return self.full_name

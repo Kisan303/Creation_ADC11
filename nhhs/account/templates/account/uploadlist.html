@@ -1,0 +1,52 @@
+
+{% block content %}
+<body>
+
+<form method="get" class="search-bar">
+    <input type="text" name ="q" placeholder="Search.." id="id_q">
+</form>
+
+<table class="table">
+
+    <thead>
+    <tr>
+        <th>Title</th>
+        <th>Date</th>
+        <th>image</th>
+        <th>Description</th>
+        <th>Download</th>
+        <th>Delete</th>
+    </tr>
+    </thead>
+    {% if record %}
+    <tbody>
+    {% for r in record %}
+        <tr>
+            <td>{{r.title}}</td>
+            <td>{{r.name}}</td>
+            <td><img src="{{creation.image.url}}">Download</a></td>
+            <td>
+                <form method="POST" action="{% url 'account:delete_photo' r.pk %}">
+                    {% csrf_token %}
+                    <button class="bt btn-danger btn-sm" type="submit">Delete</button>
+                </form>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+    {% else %}
+        <div class="container">
+            <div class="row">
+                <div class="card-body">
+                    <h1 class="card-title">No result!</h1>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+</table>
+</body>
+<script type="text/javascript">
+    document.getElementbyId('id_q').value="{{query}}"
+</script>
+{% endblock %}

@@ -1,15 +1,13 @@
 from django.test import TestCase
 from django.urls import reverse
+from account.models import Org, ChildEduDonor, User, Receiver, Upload
+import json
+import unittest
 
-from. import views
-from main.models register
-from datetime import datetime
-
-class HeraldTesting(TestCase):
+class OrgTestCase(self):
 	def setUp(self):
-		register.objects.create(first_name="Python", last_name="best", username="tulsi", contact=12333, address="ktm", age=32, email="bb@gmail.com", password="tytyt", confirm_password="tytyt")
-
-	def test_ORM(self):
-		reg=register.objects.get(first_name="Python")
-		self.assertEqual(reg.first_name, 'Python')
-
+		Org.objects.create(org_name="nhhs", email="nhhs@gmail.com", password="lilili12", address="ktm", contact=986712345, total_amt=4000, bank_acc=34566)
+		
+	def test_org_test(self):
+		nhhs=Org.objects.get(name="nhhs")
+		self.assertEqual(nhhs.name(), 'Nepal helping hands society')

@@ -148,7 +148,7 @@ def upload(request):
 
 		creation = Upload.objects.create(Title=Title, Date=Date, image=image, Description=Description)
 		creation.save();
-		return redirect('/')
+		return redirect("/")
 
 	else:
 		return render(request, "account/upload.html")	
@@ -158,3 +158,12 @@ def home(request):
 	creation2 = Upload.objects.all()	
 	print(creation2)
 	return render(request, 'account/index.html', {"creation2":creation2})
+
+
+def deletecreation(request, pk):	
+	if request.method == "POST":
+		creation = Upload.objects.get(id=pk)
+		creation.delete()
+
+	return redirect("/")	
+
