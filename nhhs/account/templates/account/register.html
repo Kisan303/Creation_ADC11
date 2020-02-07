@@ -17,8 +17,8 @@
 {% block content %}
 
 
-   <div class="nav">
-		<!--<img src="/images/logo.png"> -->
+   <!-- <div class="nav">
+		
 		
 			<ul class="menu">
 				<strong>
@@ -39,22 +39,70 @@
 				       </strong>
 			</ul>
 			
-		</div>
+		</div> -->
+
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+   <title>Home page</title>
+</head>
+<body>
+
+
+  
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="/">NHHS</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="/">Home</a>
+      </li>
+      				{% if user.is_authenticated %}
+				<li class="nav-item"> Hello, {{user.username}}</li>
+				<li class="nav-item"><a href="/logout" class="nav-link">LogOut</a></li>
+								{% else %}
+
+                <li class="nav-item"><a href="/login" class="nav-link">Login</a></li>
+				<li class="nav-item"><a href="/register" class="nav-link">Register</a></li>
+				{% endif %}
+				<li class="nav-item"><a href="/donorform" class="nav-link">Donate</a></li>
+				<li class="nav-item"><a href="/members" class="nav-link">Search</a></li>
+				<li class="nav-item"><a href="/news" class="nav-link">News</a></li>
+				<!-- <li class="nav-item"><a href="/search" class="nav-link">Search</a></li> -->
+				<li class="nav-item"><a href="/upload" class="nav-link">Update</a></li>
+    </ul>
+  </div>
+</nav>
+   <div class="nav">
+      <!--<img src="/images/logo.png"> -->
+
+         
+      </div>
+
+      <div class="register-img">
+
+      <img style="height: 700px;" src="{%static 'pic/reg-img.png'%}"></div>
+
+<div class="register-form">
+
 	<form  method='POST'>
 
 		{% csrf_token %}
-		First name:
-		<input type="text" name="first_name" placeholder="Enter your First Name" required=""><br><br>
-		Last name:
-		<input type="text" name="last_name"placeholder="Enter your Last Name" required=""><br><br>
-		User name:
-		<input type="text" name="username"  placeholder="Enter your username" required=""><br><br>
-		Email:
-		<input type="email" name="email"placeholder="Enter your Email" required=""><br><br>
-		Password:
-		<input type="password" name="password"placeholder="Enter your Password" required=""><br><br>
-		Confirm Password:
-		<input type="password" name="confirm_password"placeholder="Confirm your passowrd" required=""><br><br>
+		 <h1 style="margin-left: -8%">Create New Account</h1><br>
+		
+		<input style="height: 45px;  width: 300px; border-radius: 10px; border-color:red;"type="text" name="first_name" placeholder="First Name" required=""><br><br>
+		
+		<input style="height: 45px;  width: 300px; border-radius: 10px; border-color: brown;"type="text" name="last_name"placeholder="Last Name" required=""><br><br>
+		
+		<input style="height: 45px;  width: 300px; border-radius: 10px; border-color: blue;"type="text" name="username"  placeholder="Username" required=""><br><br>
+		
+		<input style="height: 45px;  width: 300px; border-radius: 10px; border-color: orange;"type="email" name="email"placeholder="Email" required=""><br><br>
+		
+		<input style="height: 45px;  width: 300px; border-radius: 10px; border-color: purple;"type="password" name="password"placeholder="Password" required=""><br><br>
+		
+		<input style="height: 45px;  width: 300px; border-radius: 10px; border-color: teal;" type="password" name="confirm_password"placeholder="Confirm your passowrd" required=""><br><br>
 
 		<!--<input type="number"name="contact"placeholder="Enter your Contact" required=""><br><br>
 		Address:
@@ -63,9 +111,11 @@
 		<input type="number" name="age"placeholder="Enter your Age" required=""><br><br>
 		Email: -->
 		
-		<button>Register</button>
+		<button style="margin-left: 20%; border-radius: 10px; width: 100px;" class="btn btn-secondary">Register</button>
+
 		
 	</form>
+</div>
 
 	<div>
 
@@ -82,3 +132,34 @@
 </html>
 
 
+
+<!-- ====================================================================================== -->
+
+<style type="text/css">
+
+.register-form{
+
+	margin-left: 20%;
+            margin-top:5%;
+            
+            
+            border-size:25%;
+
+            height: 320px;
+    width: 450px;
+    
+    border-radius: 20px;
+    position: absolute;
+   
+	
+}
+
+.register-img{
+	margin-left: 37%;
+	position: absolute;
+	margin-top: -1%;
+
+}
+
+
+</style>

@@ -5,9 +5,12 @@ from django.conf.urls.static import static
 
 app_name="account"
 urlpatterns = [
-    path('register/', views.register, name="register"),
-    path('login/', views.login, name="login"),
-    path('', views.home, name="home-page"),
+    path('register/', views.reg, name="reg"),
+
+    path('', views.main, name="main-page"),
+
+    path('login/', views.log, name="log"),
+    path('news/', views.home, name="news-page"),
     path('members/', views.memList, name="mem-list"),
     path('donorform/', views.donateChildEdu, name="donate-child-education"),
     path('search/', views.search, name="search-mem"),
@@ -18,9 +21,11 @@ urlpatterns = [
     path('logout/', views.logout, name="logout"),
     path('/<int:pk>/', views.deletecreation, name='deletecreation'),
 
-
     path('api/upload/<int:pk>/', views.update_api_data, name="update_api_data"),
     path('api/', views.read_api_data, name="read_api_data"),
+
+    path('upload_pegination/<int:PAGENO>/<int:SIZE>/', views.upload_pegination, name="upload_pegination"),
+
 
 
 

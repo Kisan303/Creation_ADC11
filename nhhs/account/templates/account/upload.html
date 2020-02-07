@@ -14,8 +14,8 @@
 {% block content %}
 
 		
-		<div class="nav">
-		<!--<img src="/images/logo.png"> -->
+		<!-- <div class="nav">
+		
 		
 			<ul class="menu">
 				<strong>
@@ -36,24 +36,69 @@
 				       </strong>
 			</ul>
 			
-		</div>
+		</div> -->
 
 
 
-	
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+   <title>Home page</title>
+</head>
+<body>
 
-<h2>Upload News Here</h2>
+
+  
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="/">NHHS</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+       
+            <a class="nav-link" href="/">Home</a>
+      </li>
+      				{% if user.is_authenticated %}
+				<li class="nav-item"> Hello, {{user.username}}</li>
+				<li class="nav-item"><a href="/logout" class="nav-link">LogOut</a></li>
+								{% else %}
+
+                <li class="nav-item"><a href="/login" class="nav-link">Login</a></li>
+				<li class="nav-item"><a href="/register" class="nav-link">Register</a></li>
+				{% endif %}
+				<li class="nav-item"><a href="/donorform" class="nav-link">Donate</a></li>
+				<li class="nav-item"><a href="/members" class="nav-link">Search</a></li>
+				<li class="nav-item"><a href="/news" class="nav-link">News</a></li>
+				<!-- <li class="nav-item"><a href="/search" class="nav-link">Search</a></li> -->
+				<li class="nav-item"><a href="/upload" class="nav-link">Update</a></li>
+    </ul>
+  </div>
+</nav>
+   <div class="nav">
+      <!--<img src="/images/logo.png"> -->
+
+         
+      </div>
+
+
+
+	<img style="margin-left:-7%; margin-top: -2%;"  src="{%static 'pic/update-img.png'%}"></div>
+
+<h2 style="margin-left: 65%; margin-top: -39%;">Upload News Here</h2>
+
+<div class="update-form">
 <form method="POST" enctype="multipart/form-data"> 
 	{% csrf_token %}
 
-	<input type="text" name="Title"><br><br>
-	<input type="Date" name="Date"><br><br>
-	<input type="file" name="image"><br><br>
+	<input style="height: 45px;  width: 300px; border-radius: 10px; border-color: teal;" type="text" name="Title" placeholder="Title"><br><br>
+	<input style="height: 45px;  width: 300px; border-radius: 10px; border-color: teal;" type="Date" name="Date" placeholder="Date"><br><br>
+	<input style="height: 45px;  width: 300px; border-radius: 10px; border-color: teal;" type="file" name="image" placeholder="serach images"><br><br>
 	<!--<textarea name="message" id="Description"></textarea><br><br>-->
-	<input type="textarea" name="Description">
-	<button>Upload</button><br><br>
+	<input style="height: 45px;  width: 300px; border-radius: 10px; border-color: teal;" type="textarea" name="Description" placeholder="Descriptions"><br><br>
+	<button style=" border-radius: 10px; margin-left: 29%; width: 100px; " class="btn btn-success">Upload</button>
 
-
+</div>
 
 </form>
 
@@ -64,3 +109,17 @@
 </html>
 
 
+<!-- ================================================================================ -->
+
+<style type="text/css">
+
+.update-form{
+	margin-left: 65%;
+	margin-top: 1%;
+	position: absolute;
+	
+
+}
+
+
+</style>

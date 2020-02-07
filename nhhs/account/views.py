@@ -13,7 +13,7 @@ import json
 from django.views.decorators.csrf import csrf_exempt
 
 
-def login(request):
+def log(request):
 	if request.method=='POST':
 	   username = request.POST['username']
 	   password = request.POST['password'] 
@@ -38,7 +38,7 @@ def logout(request):
 	return redirect('/')
 
 
-def register (request):
+def reg(request):
 
 	if request.method =='POST':
 
@@ -58,16 +58,16 @@ def register (request):
 	   if password==confirm_password: #comparing password and confirm password are equal or not
 	   		if User.objects.filter(username=username).exists(): #user name checking from auth user model
 	   			messages.info(request,'username is taken')  # if user name is exsit already send error message
-	   			return redirect('register')
+	   			return redirect('account:reg')
 	   		elif User.objects.filter(email=email).exists():  #email id checking from auth user model
 	   			messages.info(request,'email is taken')  #if email exit in auth user model then send error message
 	   			return redirect('register')
 
 	   		else:	
 			    user = User.objects.create_user(username=username, first_name=first_name,last_name= last_name,email=email, password=password)
-			    user.save();
+			    user.save()
 			    print('user create')
-			    return redirect('login')
+			    return redirect('account:log')
 		   
 
 	   else:
@@ -152,7 +152,7 @@ def upload(request):
 
 		creation = Upload.objects.create(Title=Title, Date=Date, image=image, Description=Description)
 
-		return redirect("/")
+		return redirect("/news")
 
 	else:
 		return render(request, "account/upload.html")	
@@ -161,7 +161,7 @@ def upload(request):
 def home(request):
 	creation2 = Upload.objects.all()	
 	print(creation2)
-	return render(request, 'account/index.html', {"creation2":creation2})
+	return render(request, 'account/news.html', {"creation2":creation2})
 
 
 def deletecreation(request, pk):	
@@ -169,7 +169,7 @@ def deletecreation(request, pk):
 		creation = Upload.objects.get(id=pk)
 		creation.delete()
 
-	return redirect("/")	
+	return redirect("/news")	
 
 
 
@@ -215,5 +215,22 @@ def update_api_data(request, pk):
     	
     else:
     	return JsonResponse({"message": "testing"})
+
+
+
+
+def main(request):
+	return render(request, 'account/main.html')
+
+
+def upload_pegination(request, PAGENO, SIZE):
+	skip = SIZE * (PAGENO-1)
+	pegination= Upload.objects.all()[skip:(PAGENO * SIZE)]
+	dict= {
+		"pegination": list(pegination.values("Title"))
+	}
+	return JsonResponse(dict)
+
+
 
 

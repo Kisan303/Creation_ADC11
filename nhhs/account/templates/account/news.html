@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+{% load static %}
+
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+	<title>Home page</title>
+</head>
+<body>
+
+
+	{% block content %}
+		<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="/">NHHS</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="/">Home</a>
+      </li>
+      				{% if user.is_authenticated %}
+				<li class="nav-item"> Hello, {{user.username}}</li>
+				<li class="nav-item"><a href="/logout" class="nav-link">LogOut</a></li>
+								{% else %}
+
+                <li class="nav-item"><a href="/login" class="nav-link">Login</a></li>
+				<li class="nav-item"><a href="/register" class="nav-link">Register</a></li>
+				{% endif %}
+				<li class="nav-item"><a href="/donorform" class="nav-link">Donate</a></li>
+				<li class="nav-item"><a href="/members" class="nav-link">Search</a></li>
+				<li class="nav-item"><a href="/news" class="nav-link">News</a></li>
+				<!-- <li class="nav-item"><a href="/search" class="nav-link">Search</a></li> -->
+				<li class="nav-item"><a href="/upload" class="nav-link">Update</a></li>
+    </ul>
+  </div>
+</nav>
+	<div class="nav">
+		<!--<img src="/images/logo.png"> -->
+
+			
+		</div>
+	
+	
+		
+
+	<h1>welcome home from Homepage</h1>
+
+
+	
+
+			{% for creation in creation2 %}
+			<img src="{{creation.image.url}}" style="width: 250; height: 250; padding: 5px; border: 2px solid">
+			<p><b>Title</b>{{creation.Title}}</p>
+			<p><b>Date</b>{{creation.Date}}</p>
+			<p><b>Description</b>{{creation.Description}}</p><br>
+			
+
+
+         <a href="{{creation.image.url}}" download="">Download</a>
+
+        <form action="{% url 'account:deletecreation' creation.pk %}" method="POST">
+    		{% csrf_token %}
+        	<button type="submit">Delete</button>
+		</form>
+			{% endfor %}
+		
+	{% endblock %}
+
+
+</body>
+</html>

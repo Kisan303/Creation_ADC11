@@ -4,17 +4,17 @@
       {% load static %}
 
    <link rel="stylesheet" href="{% static 'css_files/style.css' %}" type="text/css">
-	
+  
 </head>
 <body>
 
 
-{% block content %}
 
-<div class="nav">
+
+<!-- <div class="nav"> -->
       <!--<img src="/images/logo.png"> -->
       
-         <ul class="menu">
+        <!--  <ul class="menu">
             <strong>
             <li><a href="/">Home</a></li>
 
@@ -33,31 +33,123 @@
                    </strong>
          </ul>
          
+      </div>  
+ -->
+
+
+
+   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+   <title>Home page</title>
+</head>
+<body>
+
+
+  
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="/">NHHS</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="/">Home</a>
+      </li>
+                  {% if user.is_authenticated %}
+            <li class="nav-item"> Hello, {{user.username}}</li>
+            <li class="nav-item"><a href="/logout" class="nav-link">LogOut</a></li>
+                        {% else %}
+
+                <li class="nav-item"><a href="/login" class="nav-link">Login</a></li>
+            <li class="nav-item"><a href="/register" class="nav-link">Register</a></li>
+            {% endif %}
+            <li class="nav-item"><a href="/donorform" class="nav-link">Donate</a></li>
+            <li class="nav-item"><a href="/members" class="nav-link">Search</a></li>
+            <li class="nav-item"><a href="/news" class="nav-link">News</a></li>
+            <!-- <li class="nav-item"><a href="/search" class="nav-link">Search</a></li> -->
+            <li class="nav-item"><a href="/upload" class="nav-link">Update</a></li>
+    </ul>
+  </div>
+</nav>
+   <div class="nav">
+      <!--<img src="/images/logo.png"> -->
+
+         
       </div>
 
-      <h1>Welcome in Login Section</h1>
+      <div class="img">
 
+<img src="{%static 'pic/log-img.png'%}"></div>
+
+     
+<div class="login-form">
+   
    <form method="POST">
 
-   	{%csrf_token%}
+    {%csrf_token%}
 
-   	<input type="text" name="username" placeholder="username" required=""><br><br>
-   	<input type="password" name="password" placeholder="password" required="">
-   	<button>Login</button>
-   	
+<div id="login-field">
+    <h1 style="margin-left: -10%">Login Your Account</h1><br>
+    <input style="height: 45px;  width: 300px; border-radius: 10px; border-color: teal;"  type="text" name="username" placeholder=  "username" required=""><br><br>
+    <input style="height: 45px;  width: 300px; border-radius: 10px; border-color: teal;" type="password" name="password" placeholder="password" required=""><br><br>
+    <button style=" border-radius: 10px; margin-left: 29%; width: 100px; " class="btn btn-success"> <strong>Login </strong></button>
 
+    
+</div>
    </form>
+
+
+
+   </div>
 
    <div>
 
-	{% for message in messages %}
+  {% for message in messages %}
 
-	<h3>{{message}}</h3> <!-- error messgae pass if userna and password dont match from auth user data base model-->
-	{% endfor %}
+  <h3>{{message}}</h3> <!-- error messgae pass if userna and password dont match from auth user data base model-->
+  {% endfor %}
 </div>
-
-
-
-{% endblock %} 
 </body>
 </html>
+
+<!--======================================================================================= -->
+
+
+              <!-- CSS FILES ONLY FOR LOGIN PAGE -->
+
+
+
+
+
+<style type="text/css">
+      
+      
+         .login-form{
+            margin-left: 55%;
+            margin-top:12%;
+            background-color: white;
+            
+           
+            height: 320px;
+    width: 450px;
+    
+    border-radius: 20px;
+    position: absolute;
+   
+
+         }
+
+#login-field{
+   margin-left: 20%;
+  
+}
+
+
+.img{
+  margin-left: -8%;
+  margin-top: -5%;
+  height: 20px;
+}
+      
+   </style>
