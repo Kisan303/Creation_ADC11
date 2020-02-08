@@ -2,11 +2,38 @@
 <!DOCTYPE html>
 <html>
 <head>
+	  {% load static %}
+
+	<link rel="stylesheet" href="{% static 'css_files/style.css' %}" type="text/css">
 	<title></title>
 </head>
 <body>
 
-		{% extends 'account/index.html' %}
+	<div class="nav">
+		<!--<img src="/images/logo.png"> -->
+		
+			<ul class="menu">
+				<strong>
+				<li><a href="/">Home</a></li>
+
+				{% if user.is_authenticated %}
+				<li style="font-family: arial; color: pink;"> Hello, {{user.username}}</li>
+				<li><a href="/logout">LogOut</a></li>
+				{% else %}
+
+				<li><a href="/register">Register</a></li>
+				<li><a href="/login">Login</a></li>
+				{% endif %}
+				<li><a href="/donorform">Donate</a></li>
+				<li><a href="/members">Members</a></li>
+				<li><a href="/search">Search</a></li>
+				<li><a href="/upload">News Upadte</a></li>
+				       </strong>
+			</ul>
+			
+		</div>
+
+		
 
 
 
@@ -33,10 +60,13 @@
 		Email:
 		<input type="email" name="email"placeholder="Enter your Email" required=""><br><br>
 		Donate Catagory:
-		<input type="text" name="donate_catagory"placeholder="please choose donate catagory" required=""><br><br>
-		<!--<input type="checkbox" name="child education" value="child education"> Child Education<br>
-  		<input type="checkbox" name="homeless person" value="homeless person"> Homeless Person<br>
-  		<input type="checkbox" name="health care" value="health care" checked> Health Care<br><br>-->
+		<br><br>
+		<select name="donate_catagory">
+			<option>Child Education</option>
+			<option>Poor People</optiton>
+			<option>Homeless Person</option>
+		</select>
+		<br>
 		Donate Amt:
 		<input type="number" name="donate_amt"placeholder="Enter your donate amt" required=""><br><br>
 		Comments:
@@ -47,7 +77,7 @@
 
 
 
-{% endblock %} -->
+{% endblock %} 
 
 </body>
 </html>

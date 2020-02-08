@@ -1,14 +1,18 @@
 from django.shortcuts import render, redirect
 from django.http import *
 from django.http import HttpResponse
-from .models import ChildEduDonor
+from .models import ChildEduDonor,PoorDonor,HomeDonor
 from django.contrib.auth.models import User, auth
 from django.contrib import messages 
 from django.db.models import Q
-#from .models import Register
+from .models import Upload
+from django.core.files.storage import FileSystemStorage
+from django.views.decorators.http import require_http_methods
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 
-
-def login(request):
+@require_http_methods(["GET", "POST"])
+def log(request):
 	if request.method=='POST':
 	   username = request.POST['username']
 	   password = request.POST['password'] 
@@ -27,10 +31,13 @@ def login(request):
 	    return render(request, "account/login.html")
 
 
+#*** Logout after login is done*******
+def logout(request):
+	auth.logout(request)
+	return redirect('/')
 
-
-
-def register (request):
+@require_http_methods(["GET", "POST"])
+def reg(request):
 
 	if request.method =='POST':
 
@@ -50,16 +57,16 @@ def register (request):
 	   if password==confirm_password: #comparing password and confirm password are equal or not
 	   		if User.objects.filter(username=username).exists(): #user name checking from auth user model
 	   			messages.info(request,'username is taken')  # if user name is exsit already send error message
-	   			return redirect('register')
+	   			return redirect('account:register')
 	   		elif User.objects.filter(email=email).exists():  #email id checking from auth user model
 	   			messages.info(request,'email is taken')  #if email exit in auth user model then send error message
-	   			return redirect('register')
+	   			return redirect('account:register')
 
 	   		else:	
 			    user = User.objects.create_user(username=username, first_name=first_name,last_name= last_name,email=email, password=password)
-			    user.save();
+			    user.save()
 			    print('user create')
-			    return redirect('login')
+			    return redirect('account:login')
 		   
 
 	   else:
@@ -73,14 +80,13 @@ def register (request):
  		return render(request,'account/register.html')
 
 
-
-
 def profile(request):
 	return render(request, "account/login.html")
 
-def index(request):
-	return render(request, "account/index.html")
+# def index(request):
+# 	return render(request, "account/index.html")
 
+@login_required(login_url = '/register')#must be user to be donor
 def donateChildEdu(request):
 	if request.method =='POST':
 	   print(request.POST)
@@ -95,11 +101,23 @@ def donateChildEdu(request):
 	   donate_catagory = request.POST['donate_catagory']
 	   donate_amt = request.POST['donate_amt']
 	   comments = request.POST['comments']
-	   ch1 = ChildEduDonor.objects.create(full_name=full_name,contact= contact,address=address,street=street, city = city, postal_code=postal_code, country=country, donate_catagory=donate_catagory, donate_amt=donate_amt, comments=comments)
-	   ch1.save()
+	   if donate_catagory == 'Child Education':
+		   ch1 = ChildEduDonor.objects.create(full_name=full_name,contact= contact,address=address,street=street, city = city, postal_code=postal_code, country=country, donate_catagory=donate_catagory, donate_amt=donate_amt, comments=comments)
+		   ch1.save()
+	   elif donate_catagory == 'Poor People':
+	   	   poor = PoorDonor.objects.create(full_name=full_name,contact= contact,address=address,street=street, city = city, postal_code=postal_code, country=country, donate_catagory=donate_catagory, donate_amt=donate_amt, comments=comments)
+	   	   poor.save()
+	   		#insert intio database of poor people
+	   elif donate_catagory == 'Homeless Person':
+	   	   home = HomeDonor.objects.create(full_name=full_name,contact= contact,address=address,street=street, city = city, postal_code=postal_code, country=country, donate_catagory=donate_catagory, donate_amt=donate_amt, comments=comments)
+	   	   home.save()
+	   		#insert intio database of homeless people
 	   return HttpResponse("Donate Successfull!!! thank you")
 	else:
  		return render(request,'account/donorform.html')
+
+def dispatch(self, *args, **kwargs):
+       return super().dispatch(*args, **kwargs)
 
 def memList(request):
  	return render(request, "account/members.html")
@@ -129,3 +147,56 @@ def search(request):
 	# password=models.CharField(max_length=250)
 	# confirm_password=models.CharField(max_length=250)
 	
+
+
+def upload(request):
+
+	if request.method == 'POST':
+		Title= request.POST['Title']
+		Date= request.POST['Date']
+		image= request.FILES.get('image')
+		Description =request.POST['Description']
+		print(image)
+
+		creation = Upload.objects.create(Title=Title, Date=Date, image=image, Description=Description)
+		creation.save();
+		return redirect('/')
+
+	else:
+		return render(request, "account/upload.html")	
+
+
+def home(request):
+	creation2 = Upload.objects.all()	
+	print(creation2)
+	return render(request, 'account/index.html', {"creation2":creation2})
+
+def upload_list(request):
+
+    query=""
+    if request.GET:
+        query=request.GET['q']
+
+    images = get_data_queryset(str(query))
+    return render(request, "account/uploadlist.html", {"record":images})
+
+def delete_photo(request, pk):
+    if request.method=="POST":
+        images = Upload.objects.get(pk=pk)
+        images.delete()
+    return redirect('account:media/images')
+
+def get_data_queryset(query=None):
+    queryset = []
+    queries = query.split(" ")
+    for q in queries:
+        record = Upload.objects.filter(
+            Q(Title__icontains=q) |
+            Q(Description__icontains=q)
+        )
+
+        for images in record:
+            queryset.append(images)
+    return list(set(queryset))
+
+

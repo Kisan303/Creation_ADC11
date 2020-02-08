@@ -11,18 +11,25 @@
 
 {% block content %}
 
-
 <div class="nav">
+      <!--<img src="/images/logo.png"> -->
       
          <ul class="menu">
             <strong>
             <li><a href="/">Home</a></li>
+
+            {% if user.is_authenticated %}
+            <li style="font-family: arial; color: pink;"> Hello, {{user.username}}</li>
+            <li><a href="/logout">LogOut</a></li>
+            {% else %}
+
             <li><a href="/register">Register</a></li>
-            <li><a href='/login'>Login</a></li>
-            <li><a href="/donate">Donate</a></li>
+            <li><a href="/login">Login</a></li>
+            {% endif %}
+            <li><a href="/donorform">Donate</a></li>
             <li><a href="/members">Members</a></li>
-            
-            
+            <li><a href="/search">Search</a></li>
+            <li><a href="/upload">News Upadte</a></li>
                    </strong>
          </ul>
          
