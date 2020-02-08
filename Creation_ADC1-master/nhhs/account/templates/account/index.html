@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+         {% load static %}
+
+	<link rel="stylesheet" href="{% static 'css_files/style.css' %}" type="text/css">
+	<title>Home page</title>
+</head>
+<body>
+
+
+	{% block content %}
+
+	<div class="nav">
+		<!--<img src="/images/logo.png"> -->
+		
+			<ul class="menu">
+				<strong>
+				<li><a href="/">Home</a></li>
+
+				<!-- to display login persion in nav bar -->
+
+				{% if user.is_authenticated %}
+				<li style="font-family: arial; color: pink;"> Hello, {{user.username}}</li>
+				<li><a href="/logout">LogOut</a></li>
+				{% else %}
+
+				<li><a href="/register">Register</a></li>
+				<li><a href="/login">Login</a></li>
+				{% endif %}
+				<li><a href="/donorform">Donate</a></li>
+				<li><a href="/members">Members</a></li>
+				<li><a href="/search">Search</a></li>
+				<li><a href="/upload">News Upadte</a></li>
+				       </strong>
+			</ul>
+			
+		</div>
+	
+	
+		
+
+	<h1>welcome home from Homepage</h1>
+
+
+	
+
+			{% for creation in creation2 %}
+			<img src="{{creation.image.url}}" style="width: 250; height: 250; padding: 5px; border: 2px solid">
+			<p><b>Title</b>{{creation.Title}}</p>
+			<p><b>Date</b>{{creation.Date}}</p>
+			<p><b>Description</b>{{creation.Description}}</p><br>
+			{% endfor %}
+			
+		
+	{% endblock %}
+
+
+</body>
+</html>

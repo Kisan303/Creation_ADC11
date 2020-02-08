@@ -1,0 +1,84 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	   {% load static %}
+
+	<link rel="stylesheet" href="{% static 'css_files/style.css' %}" type="text/css">
+
+	<title>Register Page</title>
+</head>
+<body>
+
+	
+
+	
+
+{% block content %}
+
+
+   <div class="nav">
+		<!--<img src="/images/logo.png"> -->
+		
+			<ul class="menu">
+				<strong>
+				<li><a href="/">Home</a></li>
+
+				{% if user.is_authenticated %}
+				<li style="font-family: arial; color: pink;"> Hello, {{user.username}}</li>
+				<li><a href="/logout">LogOut</a></li>
+				{% else %}
+
+				<li><a href="/register">Register</a></li>
+				<li><a href="/login">Login</a></li>
+				{% endif %}
+				<li><a href="/donorform">Donate</a></li>
+				<li><a href="/members">Members</a></li>
+				<li><a href="/search">Search</a></li>
+				<li><a href="/upload">News Upadte</a></li>
+				       </strong>
+			</ul>
+			
+		</div>
+	<form  method='POST'>
+
+		{% csrf_token %}
+		First name:
+		<input type="text" name="first_name" placeholder="Enter your First Name" required=""><br><br>
+		Last name:
+		<input type="text" name="last_name"placeholder="Enter your Last Name" required=""><br><br>
+		User name:
+		<input type="text" name="username"  placeholder="Enter your username" required=""><br><br>
+		Email:
+		<input type="email" name="email"placeholder="Enter your Email" required=""><br><br>
+		Password:
+		<input type="password" name="password"placeholder="Enter your Password" required=""><br><br>
+		Confirm Password:
+		<input type="password" name="confirm_password"placeholder="Confirm your passowrd" required=""><br><br>
+
+		<!--<input type="number"name="contact"placeholder="Enter your Contact" required=""><br><br>
+		Address:
+		<input type="text" name="address"placeholder="Enter your Address" required=""><br><br>
+		Age:
+		<input type="number" name="age"placeholder="Enter your Age" required=""><br><br>
+		Email: -->
+		
+		<button>Register</button>
+		
+	</form>
+
+	<div>
+
+	{% for message in messages %}
+
+	<h3>{{message}}</h3> <!-- error message from register form -->
+	{% endfor %}
+</div>
+
+
+{% endblock %} 
+
+</body>
+</html>
+
+
